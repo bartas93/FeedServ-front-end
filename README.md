@@ -1,4 +1,5 @@
-An application written in Angular 4 using dashboard framework - github.com/akveo/ngx-admin:
+Front-end application for order managing in restaurant. 
+   Used technologies: Angular 4, Bootstrap, HTML, CSS, Dashboard framework - github.com/akveo/ngx-admin
 
 To run app:
 1. Run back-end FeedServ app
