@@ -1,0 +1,35 @@
+$info-color:#4ca6ff ;
+$green-color:#40dc7e ;
+$red-color:#E57373; 
+
+.green:hover{
+    cursor: pointer;
+    opacity:0.7;
+}
+.icon{
+    text-align: center
+}
+.green{
+        color:$green-color;
+}
+.info{
+    color: $info-color;
+}
+.info:hover{
+    cursor: pointer;
+    opacity: 0.7;
+} 
+.red{
+    color: $red-color;
+    text-align: center;
+}
+.red:hover{
+    cursor: pointer;
+    opacity: 0.7;
+} 
+
+@media screen {
+        .modal-xxl .modal-lg {
+            max-width: 1200px !important;
+        }
+    }

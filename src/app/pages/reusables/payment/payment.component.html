@@ -1,0 +1,87 @@
+<div class="modal-header">
+    <div>
+        <img src="assets/icons/orderLocationType/{{order?.orderLocationType}}.png" alt="{{order?.orderLocationType}}">
+    </div>
+    <span>
+        Podsumowanie zamówienia nr: {{order?.id}}
+        <span *ngIf="order?.customerTable">Stolik: {{order?.customerTable}}</span>
+    </span>
+    <button class="close" aria-label="Close" (click)="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div class="modal-body-header">
+        <div class="info-side">
+            <div class="header-info-side">Przyjęte przez</div>
+            <div class="header-content-side">
+                <nb-user [menu]="userMenu" [name]="order?.reveivedBySimpleEmployeeTo?.fullName" [picture]="order?.reveivedBySimpleEmployeeTo?.imageUrl"></nb-user>
+            </div>
+        </div>
+        <div class="info-side">
+            <div class="header-info-side">Data przyjęcia</div>
+            <div class="header-content-side">{{order?.receivedTime}}</div>
+        </div>
+        <div style="clear: both;"></div>
+        <div class="info-side" *ngIf="order.simplePartnerTo?.name">
+            <div class="header-info-side">Zamówienie przez partnera</div>
+            <div class="header-content-side">{{order?.simplePartnerTo?.name}}</div>
+        </div>
+        <div class="info-side" *ngIf="order.simpleCustomerTo">
+            <div class="header-info-side">Dane klienta</div>
+            <div class="header-content-side">{{order?.simpleCustomerTo?.name}} {{order?.simpleCustomerTo?.phoneNumber}}</div>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div class="modal-body-content">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Danie</th>
+                    <th>Wielkość</th>
+                    <th>Koszt</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of order.simpleOrderItemTos">
+                    <td>{{item.menuItemName}}</td>
+                    <td>{{item.dishLargenessName}}</td>
+                    <td>{{item.totalCostWithAdditionalProducts |number:'1.2-2'}} zł</td>
+                </tr>
+                <tr *ngIf="order?.deliveryCost">
+                    <td colspan="2">Koszt Dostawy</td>
+                    <td>{{order.deliveryCost |number:'1.2-2'}} zł</td>
+                </tr>
+                <tr>
+                    <td colspan="2">SUMA</td>
+                    <td>{{order.amountToPay |number:'1.2-2'}} zł</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="payment-message" [class.hide]="paymentMethod">WYBIERZ METODĘ PŁATNOŚCI</div>
+        <div class="row method-payment">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 method" (click)="setPaymentMethod('CARD')" [class.method-clicked]="paymentMethod=='CARD'">
+                <div class="method-text">
+                    Karta
+                </div>
+                <div class="method-image">
+                    <img src="assets/icons/paymentMethod/CARD.png" alt="card-payment">
+                </div>
+            </div>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 method" (click)="setPaymentMethod('CASH')" [class.method-clicked]="paymentMethod=='CASH'">
+                <div class=" method-text">
+                    Gotówka
+                </div>
+                <div class="method-image ">
+                    <img src="assets/icons/paymentMethod/CASH.png" alt="cash-payment">
+                </div>
+            </div>
+        </div>
+        <div style="clear: both "></div>
+    </div>
+</div>
+<div class=" modal-footer ">
+    <button class="btn btn-md btn-danger " (click)="closeModal()">ANULUJ</button>
+    <button class="btn btn-md btn-success " [disabled]="!paymentMethod" (click)="payForTheOrder()">ZAPŁAĆ</button>
+</div>

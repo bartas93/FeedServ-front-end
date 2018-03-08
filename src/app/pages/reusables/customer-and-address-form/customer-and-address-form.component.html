@@ -1,0 +1,72 @@
+<nb-card>
+    <nb-card-body>
+        <div [formGroup]="customerAndAddress">
+            <div class="row">
+                <div class="col-md-6">
+                    <div formGroupName="customer" class="form-group input-group-sm">
+                        <label for="inputPhoneNumber" class="bold">Numer telefonu</label>
+                        <input #phoneNumber formControlName="phoneNumber" (keyup)="onKeyUp(phoneNumber.value)" type="text" class="form-control" id="inputPhoneNumber"
+                            placeholder="Numer Telefonu" [class.form-control-danger]="customerAndAddress.controls.customer.controls.phoneNumber.invalid">
+                        <ul class="search-result">
+                            <li *ngFor="let customer of customers$ | async">
+                                <ul>
+                                    <li *ngFor="let address of customer.addressTos" (click)="fillForm(customer, address)">
+                                        <a>
+                                            {{customer.phoneNumber}} {{address.street}} {{address.streetNumber}}/{{address.localNumber}}
+                                        </a>
+                                    </li>
+                                </ul>
+
+                            </li>
+                        </ul>
+                    </div>
+                    <show-errors [control]="customerAndAddress.controls.customer.controls.phoneNumber"></show-errors>
+                </div>
+                <div class="col-md-6" *ngIf="selectedOrderLocationType=='DELIVERY'">
+                    <div formGroupName="address" class="form-group">
+                        <label for="inputAddress" class="bold">Adres dostawy</label>
+                        <div class="row input-group-sm">
+                            <input formControlName="street" type="text" class="form-control col-md-12" id="inputStreet" placeholder="Ulica" [class.form-control-danger]="customerAndAddress.controls.address.controls.street.invalid">
+                        </div>
+                        <show-errors [control]="customerAndAddress.controls.address.controls.street"></show-errors>
+                        <div class="row input-group-sm justify">
+                            <input formControlName="streetNumber" type="text" class="form-control col-md-4 margin-vertical" id="inputStreetNumber" placeholder="Nr domu"
+                                [class.form-control-danger]="customerAndAddress.controls.address.controls.streetNumber.invalid">
+                            <input formControlName="localNumber" type="text" class="form-control col-md-4 margin-vertical" id="inputLocalNumber" placeholder="Nr lokalu">
+                            <input formControlName="floor" type="text" class="form-control col-md-3 margin-vertical" id="inputFloor" placeholder="piętro">
+                        </div>
+                        <show-errors [control]="customerAndAddress.controls.address.controls.streetNumber"></show-errors>
+                    </div>
+                </div>
+            </div>
+            <div class="row" [hidden]="more=='Rozwiń'">
+                <div class="col-md-6">
+                    <div class="row" formGroupName="customer">
+                        <div class="col-md-6 input-group-sm">
+                            <input formControlName="name" type="text" class="form-control margin-vertical" id="inputName" placeholder="Imie">
+                        </div>
+                        <div class="col-md-6 input-group-sm">
+                            <input formControlName="email" type="text" class="form-control margin-vertical" id="inputEmail" placeholder="email">
+                        </div>
+                    </div>
+                    <div formGroupName="customer">
+                        <textarea rows="3" formControlName="description" placeholder="Komentarz odnośnie klienta" class="form-control margin-vertical"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6" formGroupName="address" *ngIf="selectedOrderLocationType=='DELIVERY'">
+                    <div class="input-group-sm justify">
+                        <input formControlName="city" type="text" class="form-control col-md-4 margin-vertical" id="inputCity" placeholder="Miasto"
+                            [class.form-control-danger]="customerAndAddress.controls.address.controls.city.invalid">
+                        <show-errors [control]="customerAndAddress.controls.address.controls.city"></show-errors>
+                        <input formControlName="postCode" type="text" class="form-control col-md-3 margin-vertical" id="inputPostCode" placeholder="Kod pocztowy">
+                        <input formControlName="country" type="text" class="form-control col-md-4 margin-vertical" id="inputCountry" placeholder="Państwo">
+                    </div>
+                    <textarea rows="3" formControlName="comments" placeholder="Komentarz odnośnie adresu" class="form-control margin-vertical"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <button type="button" class="btn btn-info btn-block btn-tn col-md-2 offset-md-5" (click)="showMore()">{{more}} </button>
+        </div>
+    </nb-card-body>
+</nb-card>

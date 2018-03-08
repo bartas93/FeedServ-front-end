@@ -1,0 +1,22 @@
+<toaster-container [toasterconfig]="config"></toaster-container>
+<div class="quantity">Zamówień:
+    <br>
+    <strong>{{orderQuantity}}</strong>
+</div>
+<div class="container" *ngIf="groupedOrders">
+    <div class="order-location-type" *ngIf="groupedOrders[0]?.length>0">W LOKALU</div>
+    <div class="row">
+        <simple-order-card class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3" *ngFor="let order of groupedOrders[0]" [order]="order"
+            (onOrderPaid)="onOrderPaid($event)"></simple-order-card>
+    </div>
+    <div class="order-location-type" *ngIf="groupedOrders[1]?.length>0">WYNOS</div>
+    <div class="row">
+        <simple-order-card class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3" *ngFor="let order of groupedOrders[1]" [order]="order"
+            (onOrderPaid)="onOrderPaid($event)"></simple-order-card>
+    </div>
+    <div class="order-location-type" *ngIf="groupedOrders[2]?.length>0">DOSTAWA</div>
+    <div class="row">
+        <simple-order-card class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3" *ngFor="let order of groupedOrders[2]" [order]="order"
+            (onOrderPaid)="onOrderPaid($event)"></simple-order-card>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+<button class="close" aria-label="Close" (click)="cancel()">
+    <span aria-hidden="true">&times;</span>
+</button>
+
+
+<div class="row container">
+    <div class="menu col-md-9">
+        <nb-tabset *ngIf="showMenuDishTypeTos">
+            <nb-tab *ngFor="let dishType of showMenuDishTypeTos" tabTitle="{{dishType?.name}}">
+                <div class="menuItem" *ngFor="let menuItem of dishType.showMenuItemTos">
+                    <div class="row">
+
+                        <nb-user class="col-md-5" size="large" [picture]="menuItem?.imageUrl" [name]="menuItem?.id+'. '+menuItem?.name" [title]="menuItem?.description"></nb-user>
+                        <div class="col-md-7">
+                            <div class="btn-group" *ngFor="let midl of menuItem.menuItemDishLargenessTos">
+                                <button type="button" class="btn btn-info btn-tn dish-largeness" (click)="addToSummary(menuItem ,midl)">
+                                    {{midl.dishLargenessName}} ({{midl.costAfterPromotion |number:'1.2-2'}} zł)
+                                </button>
+                            </div>
+                        </div>
+                        <!-- <button type="button" class="btn btn-info btn-tn btn-group-divider" (click)="addToSummary(menuItem ,midl)">
+                            {{midl.dishLargenessName}} ({{midl.costAfterPromotion |number:'1.2-2'}} zł)
+                        </button> -->
+                        <!-- <button type="button" class="btn btn-primary btn-group-icon" (click)="doChanges(midl)">
+                            <i class="fa fa-cog"></i>
+                        </button> -->
+                    </div>
+                </div>
+            </nb-tab>
+        </nb-tabset>
+    </div>
+    <div class="col-md-3 summary">
+        <div class="row justify">
+            <button type="button" class="btn btn-success col-md-5 summary-butons" (click)="save()">Zapisz</button>
+            <button type="button" class="btn btn-warning col-md-5 summary-butons" (click)="cancel()">Anuluj</button>
+        </div>
+        <div class="text-center text-bold">
+            Podsumowanie
+        </div>
+        <div class="summary-text">
+            <div class="menu-item" *ngFor="let item of newOrderItemTos">
+                {{item?.menuItemName}}
+                <div class="red right" (click)="removeItem(item)">
+                    <i class="fa fa-minus right red"></i>
+                </div>
+                <br>
+                <span class="small-text">{{item?.dishLargenessName}} {{item?.totalCostWithAdditionalProducts}}</span>
+                <span class="red" *ngIf="item?.newChangesInOrderItemTos?.length>0">Zmnienone</span>
+            </div>
+        </div>
+    </div>
+</div>

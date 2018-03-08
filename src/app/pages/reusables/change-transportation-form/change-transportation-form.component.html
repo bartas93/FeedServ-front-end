@@ -1,0 +1,38 @@
+<nb-card>
+    <nb-card-header>
+        <div class="row">
+            <div class="col-md-8">
+                Dodatkowe informacje o dostawie
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-info btn-block btn-tn" (click)="showMore()">{{more}} </button>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body [hidden]="more=='Rozwiń'">
+        <div [formGroup]="changeTransportation">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group input-group-sm">
+                        <label for="inputDeliveryGroup">Realizowany w grupie dostawy</label>
+                        <input formControlName="deliveryGroup" type="text" class="form-control" id="inputDeliveryGroup" placeholder="Grupa dostawy">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <label>Wybierz Kierowce</label>
+                    <div *ngFor="let driver of drivers" class="driver">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <nb-user [name]="driver.fullName" [picture]="driver.imageUrl" title="kierowca">
+                                </nb-user>
+                            </div>
+                            <div class="col-md-2 radio">
+                                <input type="radio" formControlName="driverEmployeeId" [(ngModel)]="driverRadioButtonValue" [value]="driver.id" (click)="toggleRadioButton($event)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

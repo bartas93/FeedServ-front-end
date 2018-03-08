@@ -1,0 +1,25 @@
+<nb-card>
+    <nb-card-header>
+        <div class="row">
+            <div class="col-md-8">
+                Zamówienia:
+            </div>
+            <div class="icon col-md-2 offset-md-2" (click)="addNewOrderItems()">
+                <i class="fa fa-plus fa-2x info" aria-hidden="true"></i>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body>
+        <div class="row">
+            <div *ngFor="let orderItem of menuItems.value; let i=index" class="col-md-6">
+                <div class="row">
+                    <nb-user class="col-md-9" [name]="orderItem.menuItemName + '('+orderItem.totalCostWithAdditionalProducts+' zł)'" [picture]="orderItem.imageUrl"
+                        [title]="orderItem.dishLargenessName"></nb-user>
+                    <div class="col-md-3 icon" (click)="removeRowFromForm(i)">
+                        <i class="fa fa-minus fa-2x red"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

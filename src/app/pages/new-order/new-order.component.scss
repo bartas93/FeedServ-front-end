@@ -1,0 +1,25 @@
+@import '../../@theme/styles/themes';
+@import '~@nebular/theme/styles/global/bootstrap/hero-buttons';
+
+@include nb-install-component() {
+
+$info-color:#64B5F6 ;
+$green-color:#40dc7e ;
+$secondary-color: #ebeef2;
+$grey-color: #acacac;
+$red-color:#E57373; 
+
+.margin-down{
+    margin-bottom: 15px;
+}
+
+.margin{
+    margin:10px;
+}
+
+.justify{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+}

@@ -1,0 +1,68 @@
+@import '../../../@theme/styles/themes';
+@import '~@nebular/theme/styles/global/bootstrap/hero-buttons';
+
+@include nb-install-component() {
+
+$info-color:#64B5F6 ;
+$green-color:#40dc7e ;
+$secondary-color: #ebeef2;
+$grey-color: #acacac;
+$red-color:#E57373; 
+
+.menuItem{
+    margin-top:20px;
+}
+
+.dish-largeness{
+    margin:5px;
+}
+
+.justify{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.text-bold{
+    font-weight: bold;
+    font-size: 1.125rem;
+}
+.text-center{
+    text-align: center;
+}
+.right{
+    float:right;
+}
+.red{
+    color: $red-color; 
+}
+
+.red:hover{
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.summary-text{
+    min-height: 200px;
+}
+.summary-butons{
+    margin-top:50px;
+    margin-bottom: 50px;
+}
+
+.menu{
+    overflow-y: auto;
+    height: 90vh;
+}
+
+.small-text{
+    font-size: 75%;
+    color: nb-theme(color-fg);
+}
+
+.menu-item {
+    &:not(:last-child) {
+      border-bottom: 1px solid nb-theme(separator);
+    }
+    padding:10px 0;
+  }
+}

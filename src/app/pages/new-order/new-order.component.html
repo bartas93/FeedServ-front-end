@@ -1,0 +1,37 @@
+<toaster-container [toasterconfig]="config"></toaster-container>
+<form [formGroup]="myForm">
+    <div class="row">
+        <div [(ngModel)]="selectedOrderLocationType" [formControl]="myForm.controls.orderLocationType" ngbRadioGroup class="btn-group btn-toggle-group btn-outline-toggle-group btn-group-full-width btn-toggle-radio-group">
+            <label *ngFor="let orderLocationType of orderLocationTypes" ngbButtonLabel class="btn" [class.btn-outline-info]="selectedOrderLocationType!=null"
+                [class.btn-outline-danger]="selectedOrderLocationType==null">
+                <input ngbButton type="radio" [value]="orderLocationType.value"> {{orderLocationType.name}}
+            </label>
+        </div>
+        <show-errors [control]="myForm.controls.orderLocationType"></show-errors>
+    </div>
+    <div class="row">
+        <customer-and-address-form class="col-md-12" [hidden]="myForm.controls.orderLocationType.value=='LOCAL'" [selectedOrderLocationType]="selectedOrderLocationType"
+            [customerAndAddress]="myForm.controls.customerAndAddress"></customer-and-address-form>
+    </div>
+    <div class="row">
+        <menu-item-form class="col-md-6" [menuItems]="myForm.controls.menuItems"></menu-item-form>
+        <div class="col-md-6">
+            <additional-info-form [additionalInfo]="myForm.controls.additionalInfo" [selectedOrderLocationType]="selectedOrderLocationType"></additional-info-form>
+            <change-transportation-form [hidden]="myForm.controls.orderLocationType.value!='DELIVERY'" [changeTransportation]="myForm.controls.changeTransportation"></change-transportation-form>
+        </div>
+    </div>
+
+    <div class="row" [hidden]="myForm.controls.orderLocationType.value!='DELIVERY'">
+        <div [(ngModel)]="selectedPaymentMethod" [formControl]="myForm.controls.paymentMethod" ngbRadioGroup class="btn-group btn-toggle-group btn-outline-toggle-group btn-group-full-width btn-toggle-radio-group margin-down">
+            <label ngbButtonLabel class="btn" *ngFor="let paymentMethod of paymentMethods" [class.btn-outline-info]="selectedPaymentMethod!=null"
+                [class.btn-outline-danger]="selectedPaymentMethod==null">
+                <input ngbButton type="radio" value="{{paymentMethod.value}}">{{paymentMethod.name}}
+            </label>
+        </div>
+    </div>
+    <show-errors [control]="myForm.controls.paymentMethod"></show-errors>
+    <div class="row justify">
+        <button (click)="resetForm()" class="btn btn-warning col-md-5">Resetuj</button>
+        <button type="submit" class="btn btn-success col-md-5" (click)="saveOrder()" [disabled]="!myForm.valid">Dodaj zamówienie</button>
+    </div>
+</form>

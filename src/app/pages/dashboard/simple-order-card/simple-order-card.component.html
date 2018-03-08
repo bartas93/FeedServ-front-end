@@ -1,0 +1,90 @@
+<nb-card>
+    <nb-card-header>
+        <div class="row">
+            <div class="col-md-4 col-4">
+                <img class="small-img" src="assets/icons/orderLocationType/{{order?.orderLocationType}}.png" alt="{{order?.orderLocationType}}">
+            </div>
+            <div class="col-md-4 col-4">
+                <div class="circle" [class.green]="order.paidAmount!=null">{{order.id}}</div>
+            </div>
+            <div class="col-md-4 col-4 small-text right">
+                <div>Przyjeto: {{order?.receivedTime | slice:0:5}}</div>
+                <div *ngIf="order.orderAtTime">Zamówiono na: {{order?.orderAtTime | slice:0:5}}</div>
+                <div *ngIf="order.deliveryGroup">Gr dost:{{order?.deliveryGroup}} </div>
+                <div *ngIf="order.customerTable">Stolik:{{order?.customerTable}}</div>
+            </div>
+        </div>
+    </nb-card-header>
+
+    <nb-card-body>
+        <!-- <span style="float:right;">
+            <i class="far fa-edit fa-lg order-edit"></i>
+        </span> -->
+        <div style="clear:both"></div>
+        <div class="card-row" *ngIf="order?.simplePartnerTo?.name"> {{order.simplePartnerTo.name}}</div>
+        <div>
+            <span class="text-center text-bold block">Zamówione ({{order?.simpleOrderItemTos.length}}):</span>
+            <div class="card-row" *ngFor="let item of order.simpleOrderItemTos">
+                <i style="font-size: 50%;" class="fas fa-circle green" [class.red]="!item.cooked"></i> {{item.menuItemName}}
+                <span class="small-text">({{item.totalCostWithAdditionalProducts |number:'1.2-2'}} zł)</span>
+                <br>
+                <span class="small-text">({{item.dishLargenessName}}</span>
+                <div class="red text-center text-bold card-row" *ngIf="item.orderItemChanged">
+                    ISTNIEJĄ ZMIANY W ZAMÓWIENIU!
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="order.comment">
+            <div class="red text-center text-bold card-row">
+                {{order?.comment}}
+            </div>
+        </div>
+        <div *ngIf="order.driverSimpleEmployeeTo" class="card-row">
+            <nb-user [name]="order?.driverSimpleEmployeeTo?.fullName" [picture]="order?.driverSimpleEmployeeTo?.imageUrl" title="kierowca"></nb-user>
+        </div>
+        <div *ngIf="order.simpleCustomerTo" class="card-row">
+            Klient: {{order?.simpleCustomerTo?.name}}
+            <br>{{order?.simpleCustomerTo?.phoneNumber | phone }}
+        </div>
+        <div *ngIf="order.simpleAddressTo" class="card-row">
+            Adres dostawy:
+            <br>{{order?.simpleAddressTo?.street}} {{order?.simpleAddressTo?.streetNumber}}/{{order?.simpleAddressTo?.localNumber}}
+            <span *ngIf="order.deliveryCost" class="small-text">({{order?.deliveryCost|number:'1.2-2'}} zł)</span>
+        </div>
+    </nb-card-body>
+    <nb-card-footer>
+        <div class="text-center blue text-bold">
+            <span *ngIf="order?.orderStatus=='ORDER_RECEIVED_IN_RESTAURANT'">Zlecenie otrzymane</span>
+            <span *ngIf="order?.orderStatus=='IN_KITCHEN'">W kuchni</span>
+            <span *ngIf="order?.orderStatus=='QUALITY_CHECKING'">Sprawdzanie jakości</span>
+            <span *ngIf="order?.orderStatus=='DELIVERY'">W drodze</span>
+            <span *ngIf="order?.orderStatus=='AT_THE_CUSTOMER'">Dostarczone</span>
+        </div>
+        <div class="row order-status">
+            <i class="fas fa-phone fa-2x blue"></i>
+            <i class="fab fa-gripfire fa-2x" [class.blue]="order.orderStatus!='ORDER_RECEIVED_IN_RESTAURANT'"></i>
+            <i class="fas fa-tasks fa-2x" [class.blue]="order.orderStatus!='ORDER_RECEIVED_IN_RESTAURANT'&&order.orderStatus!='IN_KITCHEN'"></i>
+            <i class="fas fa-car fa-2x" *ngIf="order.orderLocationType=='DELIVERY'" [class.blue]="order.orderStatus=='DELIVERY'&&order.orderStatus!='AT_THE_CUSTOMER'"></i>
+            <i class="far fa-handshake fa-2x" [class.blue]="order.orderStatus=='AT_THE_CUSTOMER'"></i>
+        </div>
+
+        <div *ngIf="order.paidAmount!=null" class="card-row green text-center border">
+            ZAMÓWIENIE JUŻ ZOSTAŁO OPŁACONE!
+        </div>
+        <div class="col-centered" *ngIf="order.paidAmount==null&&order.orderLocationType!='DELIVERY'">
+            <button class="btn btn-info col-centered" (click)="payForTheOrder(order)">Płatność ({{order.amountToPay |number:'1.2-2'}} zł)</button>
+        </div>
+
+        <div *ngIf="order.paidAmount==null&&order.orderLocationType=='DELIVERY'">
+            Płatność:
+            <br>
+            <span class="text-center text-bold block" *ngIf="order.paymentMethod=='CARD'">KARTĄ ({{order?.amountToPay |number:'1.2-2'}} zł)
+                <i class="fas fa-credit-card fa-lg red"></i>
+            </span>
+            <span class="text-center text-bold block" *ngIf="order.paymentMethod=='CASH'">GOTÓWKĄ ({{order?.amountToPay |number:'1.2-2'}} zł)
+                <i class="far fa-money-bill-alt fa-lg red"></i>
+            </span>
+        </div>
+    </nb-card-footer>
+</nb-card>

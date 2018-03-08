@@ -1,0 +1,10 @@
+<toaster-container [toasterconfig]="config"></toaster-container>
+<nb-card>
+    <nb-card-header>
+        Klienci
+    </nb-card-header>
+    <nb-card-body>
+        <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)">
+        </ng2-smart-table>
+    </nb-card-body>
+</nb-card>

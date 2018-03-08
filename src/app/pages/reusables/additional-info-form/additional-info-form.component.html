@@ -1,0 +1,33 @@
+<nb-card>
+    <nb-card-header>
+        <div class="row">
+            <div class="col-md-8">
+                Dodatkowe informacje
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-info btn-block btn-tn" (click)="showMore()">{{more}} </button>
+            </div>
+        </div>
+    </nb-card-header>
+    <nb-card-body [hidden]="more=='Rozwiń'">
+        <div [formGroup]="additionalInfo">
+            <div class="row">
+                <div [class.col-md-4]="selectedOrderLocationType=='LOCAL'" [class.col-md-6]="selectedOrderLocationType!='LOCAL'">
+                    <label for="inputOrderAtTime">Zamówienie na</label>
+                    <ngb-timepicker formControlName="orderAtTime" [spinners]="OFF"></ngb-timepicker>
+                </div>
+                <div [class.col-md-4]="selectedOrderLocationType=='LOCAL'" [class.col-md-6]="selectedOrderLocationType!='LOCAL'">
+                    <div>
+                        <textarea rows="3" formControlName="comment" placeholder="Komentarz odnośnie zamówienia" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-4" *ngIf="selectedOrderLocationType=='LOCAL'">
+                    <div class="form-group input-group-sm">
+                        <label for="inputDeliveryGroup">Stolik</label>
+                        <input formControlName="customerTable" type="text" class="form-control" id="inputCustomerTable" placeholder="Stolik">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nb-card-body>
+</nb-card>

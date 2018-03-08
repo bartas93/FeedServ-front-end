@@ -1,0 +1,33 @@
+<toaster-container [toasterconfig]="config"></toaster-container>
+
+
+<nb-card>
+    <nb-card-header>
+        Podsumowanie {{terminalTo.dateFrom | date: 'dd/MM/yyyy'}}
+    </nb-card-header>
+    <nb-card-body>
+        <ngx-charts-advanced-pie-chart [scheme]="colorScheme" [results]="paymentMethod">
+        </ngx-charts-advanced-pie-chart>
+    </nb-card-body>
+</nb-card>
+<div class="row">
+    <nb-card class="col-md-6">
+        <nb-card-header>
+            Suma zysków według lokalizacji
+        </nb-card-header>
+        <nb-card-body>
+            <ngx-charts-bar-vertical [scheme]="colorScheme" [results]="orderLocationType" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="showLegend"
+                [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel">
+            </ngx-charts-bar-vertical>
+        </nb-card-body>
+    </nb-card>
+    <nb-card class="col-md-6">
+        <nb-card-header>
+            Ilości zamówówień według lokalizacji
+        </nb-card-header>
+        <nb-card-body>
+            <ngx-charts-number-card [scheme]="colorScheme" [results]="ordersQuantity">
+            </ngx-charts-number-card>
+        </nb-card-body>
+    </nb-card>
+</div>
