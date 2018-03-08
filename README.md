@@ -1,4 +1,4 @@
-Feedserv app in Angular 4
+An application written in Angular 4 using dashboard framework - github.com/akveo/ngx-admin:
 
 To run app:
 1. Run back-end FeedServ app
